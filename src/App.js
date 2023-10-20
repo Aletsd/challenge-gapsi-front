@@ -1,29 +1,32 @@
-import logo from './assets/logo.png';
+
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import MenuPrimary from './components/MenuPrimary'
+import CardProfile from './components/CardProfile'
 
 function App() {
   const [jsonData, setJsonData] = useState(null);
+  
 
-  useEffect(() => {
+  useEffect(() => {    
     axios.get('http://127.0.0.1:5000/') // url endpoint
       .then((response) => {
         setJsonData(response.data);
+        
+        //texto = JSON.stringify(jsonData.texto, null, 2)
+       
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
-
+  
   return (
     <div className="App">
-      <img src={logo} alt="logo" />
-      <h1>Mi Aplicación React</h1>
-      <div>
-      <pre>{JSON.stringify(jsonData.texto, null, 2)}</pre>
-      <pre>{JSON.stringify(jsonData.expressVersion, null, 2)}</pre>
-      </div>
+      <MenuPrimary></MenuPrimary>
+      <CardProfile texto={JSON.stringify(jsonData.texto, null, 2)} expressVersion={JSON.stringify(jsonData.expressVersion, null, 2)}></CardProfile>      
+      
     </div>
   );
 }
